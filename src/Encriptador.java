@@ -1,7 +1,7 @@
 import java.security.*;
 import javax.crypto.*;
 import java.util.Base64;
-/*
+/**
 Clase que proporciona métodos para encriptar y desencriptar
  */
 public class Encriptador {
@@ -31,33 +31,34 @@ public class Encriptador {
     }
     /**
      * Método para encriptar un mensaje con la clave pública proporcionada.
-     * @param message el mensaje a encriptar.
+     * @param mensaje el mensaje a encriptar.
      * @param publicKey la clave pública con la que se encriptará el mensaje.
      * @return el mensaje encriptado como una cadena Base64.
      * @throws Exception si ocurre un error durante el proceso de encriptación.
      */
-    public String encriptar(String message, PublicKey publicKey) throws Exception {
+    public String encriptar(String mensaje, PublicKey publicKey) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        byte[] encryptedBytes = cipher.doFinal(message.getBytes());
-        return Base64.getEncoder().encodeToString(encryptedBytes);
+        byte[] bytesEncriptados = cipher.doFinal(mensaje.getBytes());
+        return Base64.getEncoder().encodeToString(bytesEncriptados);
     }
+
     /**
      * Método para desencriptar un mensaje encriptado.
-     * @param encryptedMessage el mensaje encriptado como una cadena Base64.
+     * @param mensajeEncriptado el mensaje encriptado como una cadena Base64.
      * @return el mensaje desencriptado.
      * @throws Exception si ocurre un error durante el proceso de desencriptación.
      */
-    public String desencriptar(String encryptedMessage) throws Exception {
+    public String desencriptar(String mensajeEncriptado) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
-        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedMessage));
-        return new String(decryptedBytes);
+        byte[] bytesDesencriptados = cipher.doFinal(Base64.getDecoder().decode(mensajeEncriptado));
+        return new String(bytesDesencriptados);
     }
 
     /**
      * Método principal utilizado para demostrar el funcionamiento de la clase.
-     * @param args argumentos de la línea de comandos (no se utilizan en este ejemplo).
+     * @param args argumentos de la línea de comandos 
      */
     public static void main(String[] args) {
         try {
